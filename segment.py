@@ -11,8 +11,8 @@ ALT_LWFPGASLVS_OFST = 0xFF200000
 LEDS = 0x00000100
 
 # UDP Server Info
-UDP_IP = 	"192.168.1.204"
-UDP_PORT = 53
+UDP_IP = 	"192.168.1.204" #These change everytime  
+UDP_PORT = 53               #the board is turned on
 
 # Convert 1 digit into 7-seg bit pattern
 numtable = {
