@@ -75,7 +75,6 @@ void MainWindow::on_btn_load_clicked()
 
 }
 
-
 void MainWindow::on_sldr_brightness_valueChanged(int value)
 {
 //When the slider is adjusted, the image's X changes by a value.
@@ -84,12 +83,24 @@ void MainWindow::on_sldr_brightness_valueChanged(int value)
        //--Display the Image
 
     brightness_value = value;
+
+    QString Data = "000";
+
     // read an image
     cv::Mat image = cv::imread(brcontrastfilename->toStdString(), 0);
     cv::Mat image_higher_brightness;
 
     //Change the brightness
     image.convertTo(brconImage, -1, contrast_value, brightness_value);
+    QString cv = QString::number(contrast_value);
+
+    QString bv = QString::number(brightness_value);
+
+    Data.replace(1,1,cv);
+    Data.replace(2,1,bv);
+
+    socket->write(Data.toStdString().c_str(), 3);
+    //socket->writeDatagram(packettobesent.toStdString(),host,80);
 
     brconOut = QImage((uchar*) brconImage.data, brconImage.cols, brconImage.rows, brconImage.step, QImage::Format_Grayscale8);
     ui->lbl_t2display->setPixmap(QPixmap::fromImage(brconOut).scaled(250,250,Qt::KeepAspectRatio));
@@ -98,6 +109,7 @@ void MainWindow::on_sldr_brightness_valueChanged(int value)
 void MainWindow::on_sldr_contrast_valueChanged(int value)
 {
 //When the slider is adjusted, the image's Y changes by a value.
+    QString Data = "000";
 
 
     contrast_value = value;
@@ -105,17 +117,23 @@ void MainWindow::on_sldr_contrast_valueChanged(int value)
     cv::Mat image = cv::imread(brcontrastfilename->toStdString(), 0);
     cv::Mat image_higher_contrast;
 
-    std::cout<<"loading file: "<<brcontrastfilename->toStdString()<<std::endl;
-    std::cout<<"Image loaded\n";
+    QString cv = QString::number(contrast_value);
+
+    QString bv = QString::number(brightness_value);
+
+    Data.replace(1,1,cv);
+    Data.replace(2,1,bv);
+
     //Change the brightness
     image.convertTo(brconImage, -1, contrast_value, brightness_value);
-
+    socket->write(Data.toStdString().c_str(), 3);
     //convert to QImage
     brconOut = QImage((uchar*) brconImage.data, brconImage.cols, brconImage.rows, brconImage.step, QImage::Format_Grayscale8);
     //display to label
     ui->lbl_t2display->setPixmap(QPixmap::fromImage(brconOut).scaled(250,250,Qt::KeepAspectRatio));
 
 }
+
 
 void MainWindow::on_but_save_clicked()
 {
