@@ -132,3 +132,24 @@ void MainWindow::on_but_save_clicked()
         //t2imageLoad->save(imagePath);
 }
 
+void MainWindow::on_pushButton_clicked()
+{
+    socket = new QUdpSocket;
+
+    socket->connectToHost("192.168.1.204", 53);
+
+    bool connectSuccess = socket->waitForConnected(1000);
+
+    if(!connectSuccess)
+    {
+        exit(-1);
+    }
+
+
+   // QString Data = "023";
+    //socket->write(Data.toStdString().c_str(), 3);
+
+ }
+
+
+
