@@ -99,10 +99,10 @@ void MainWindow::on_sldr_brightness_valueChanged(int value)
 
     QString bv = QString::number(brightness_value);
 
-    Data.replace(1,1,cv);
+    Data.replace(1,1,cv); //replace 1st and 2nd seg values with brightness and contrast
     Data.replace(2,1,bv);
 
-    socket->write(Data.toStdString().c_str(), 3);
+    socket->write(Data.toStdString().c_str(), 3); //send to board
     //socket->writeDatagram(packettobesent.toStdString(),host,80);
 
     brconOut = QImage((uchar*) brconImage.data, brconImage.cols, brconImage.rows, brconImage.step, QImage::Format_Grayscale8);
@@ -124,8 +124,8 @@ void MainWindow::on_sldr_contrast_valueChanged(int value)
 
     QString bv = QString::number(brightness_value);
 
-    Data.replace(1,1,cv);
-    Data.replace(2,1,bv);
+    Data.replace(1,1,cv); //replace 1st and 2nd seg values with brightness and contrast
+    Data.replace(2,1,bv);  //send to board
 
     //Change the brightness
     image.convertTo(brconImage, -1, contrast_value, brightness_value);
@@ -157,7 +157,7 @@ void MainWindow::on_pushButton_clicked()
 {
     socket = new QUdpSocket;
 
-    socket->connectToHost("192.168.1.204", 53);
+    socket->connectToHost("192.168.1.204", 53); //ip address for board and port. (Nicholas). Changes each time the board is turned on
 
     bool connectSuccess = socket->waitForConnected(1000);
 
