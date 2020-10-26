@@ -14,6 +14,9 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
+#include<QtNetwork/QUdpSocket>
+#include<QtNetwork/QNetworkDatagram>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -39,6 +42,8 @@ private slots:
 
     void on_sldr_contrast_valueChanged(int value);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QPixmap t2Image;
@@ -48,5 +53,6 @@ private:
     int contrast_value;
     int brightness_value;
     QImage brconOut;
+    QUdpSocket *socket;
 };
 #endif // MAINWINDOW_H
